@@ -1,3 +1,10 @@
+Roadmap
+=======
+
+1. wire in a new pipeline, exporting to text
+2. point a pre-built Mu implementation to the text
+
+
 Notes regarding GHC+µVM
 =======================
 
@@ -9,12 +16,44 @@ generator and the alternative LLVM bytecode compiler.  Ideally we can do better
 than the LLVM compiler and compile straight from the STG as opposed to the Cmm
 code, but we're not sure if we can do that just yet.
 
+The overall pipeline is described at <http://www.aosabook.org/en/ghc.html>, and 
+GHC describes what it is doing using the `-v3` or `-v4` flags.  One need only 
+check `stdout`.
+
+The compilation process seems to pass through a staggering amount of 
+recompilation phases.
+
+- Parsing
+- Renaming/Typechecking
+- Desugaring
+- Simplification
+- Core Tidy
+- Core Prep
+- STG to STG
+- Code Output
+  - Code Generation
+    - Native Code Generation
+    - LLVM Code Generation
+    - new Mu Code Generation
+
 Most of the actual compiler functionality is located in
-compiler/Main.DriverPipeline and compiler/Main.CodeOutput.
+`compiler/Main.DriverPipeline` and `compiler/Main.CodeOutput`.
+
 
 ### compiler/Main.DriverPipeline
+
 
 ### compiler/Main.CodeOutput
 - codeOutput
   - outputLlvm
     - llvmCodeGen (Llvm.llvmCodeGen)
+
+
+Invoking Mu
+-----------
+
+We're using `microvm-refimpl2` at the moment, we will probably have to write
+a separate wrapper that utilises what's essentially a library provided by that
+project.  Integrating it into GHC will be another challenge.
+
+<!-- vim: set nospell: -->
