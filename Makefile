@@ -9,7 +9,9 @@ all:
 
 deps-all:
 	git submodule update --init
-	cd bin
+
+deps-mu: deps-all
+	mkdir -p bin && cd bin
 	[ -f sbt-0.13.8.tgz ] || wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
 	[ -d sbt ] || tar xzvf sbt-0.13.8.tgz
 
