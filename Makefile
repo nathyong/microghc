@@ -9,22 +9,26 @@ all:
 	false
 
 deps-all:
-	git submodule update --init
+	@echo Updating submodules
+	@git submodule update --init
 
 deps-mu: deps-all
 	@echo Getting dependencies for building Mu
+	@echo Getting sbt
 	@mkdir -p bin
-	@cd bin && [ -f sbt-0.13.8.tgz ] || wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
-	@cd bin && [ -d sbt ] || tar xzvf sbt-0.13.8.tgz
+	@cd bin; [ -f sbt-0.13.8.tgz ] || wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
+	@cd bin; [ -d sbt ] || tar xzvf sbt-0.13.8.tgz
 
 deps-ghc: deps-all
-	@echo Getting dependencies for building GHC
+	@echo Updating cabal-install
 	@cabal update
 	@cabal install -j cabal-install
+	@echo Initialising cabal sandbox
 	@cabal sandbox init --sandbox=sandbox
+	@cd microghc-ghc && cabal sandbox init --sandbox=../sandbox
+	@echo Installing dependencies for building GHC
 	@cabal install -j alex happy
 	@cabal install -j haskell-src-exts
-	@cd microghc-ghc && cabal sandbox init --sandbox=../sandbox
 
 $(STAGES): stage-% : deps-%
 	@echo Running $@
