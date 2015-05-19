@@ -1,6 +1,6 @@
 .PHONY: all
 SHELL := /bin/bash
-PATH := ./sandbox/bin:$(PATH)
+PATH := $(HOME)/.cabal/bin:./sandbox/bin:./bin/sbt/bin:$(PATH)
 
 UNAME := $(shell uname)
 
@@ -9,17 +9,17 @@ all:
 
 deps-all:
 	git submodule update --init
+	cd bin
+	[ -f sbt-0.13.8.tgz ] || wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
+	[ -d sbt ] || tar xzvf sbt-0.13.8.tgz
 
 deps-ghc: deps-all
 	cabal update
-	cabal sandbox init --sandbox=sandbox
 	cabal install -j cabal-install
+	cabal sandbox init --sandbox=sandbox
 	cabal install -j alex happy
 	cabal install -j haskell-src-exts
 	cd microghc-ghc && cabal sandbox init --sandbox=../sandbox
-
-deps-mu: deps-all
-	brew install scala sbt antlr
 
 stage-mu: deps-mu
 	cd microvm-refimpl2
