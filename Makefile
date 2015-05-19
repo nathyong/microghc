@@ -1,6 +1,6 @@
 .PHONY: all deps-all deps-mu deps-ghc $(STAGES)
 SHELL := /bin/bash
-PATH := $(HOME)/.cabal/bin:./sandbox/bin:./bin/sbt/bin:$(PATH)
+PATH := $(HOME)/.cabal/bin:$(PWD)/sandbox/bin:$(PWD)/bin/sbt/bin:$(PATH)
 
 UNAME := $(shell uname)
 STAGES = stage-mu stage-ghc
