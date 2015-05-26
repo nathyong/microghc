@@ -25,7 +25,7 @@ deps-ghc: deps-all
 	@cabal install -j cabal-install
 	@echo Initialising cabal sandbox
 	@cabal sandbox init --sandbox=sandbox
-	@cd microghc-ghc && cabal sandbox init --sandbox=../sandbox
+	@cd ghc && cabal sandbox init --sandbox=../sandbox
 	@echo Installing dependencies for building GHC
 	@cabal install -j alex happy
 	@cabal install -j haskell-src-exts
