@@ -10,7 +10,7 @@ all:
 
 deps-all:
 	@echo Updating submodules
-	@git submodule update --init
+	@git submodule update --init --remote
 
 deps-mu: deps-all
 	@echo Getting dependencies for building Mu

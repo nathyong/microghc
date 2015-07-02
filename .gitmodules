@@ -1,6 +1,8 @@
 [submodule "ghc"]
 	path = ghc
 	url = https://github.com/nathyong/microghc-ghc
+	branch = master
 [submodule "mu"]
 	path = mu
 	url = https://github.com/nathyong/microghc-mu
+	branch = master
