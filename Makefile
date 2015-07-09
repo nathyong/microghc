@@ -1,4 +1,3 @@
-.PHONY: all deps-all deps-mu deps-ghc $(STAGES)
 SHELL := /bin/bash
 PATH := $(HOME)/.cabal/bin:$(PWD)/sandbox/bin:$(PWD)/bin/sbt/bin:$(PATH)
 
@@ -33,3 +32,9 @@ deps-ghc: deps-all
 $(STAGES): stage-% : deps-%
 	@echo Running $@
 	@$(SHELL) scripts/$@.sh
+
+test: stage-ghc
+	@echo Running GHC\'s \'validate\' script
+	@cd ghc && CPUS=4 ./validate --testsuite-only
+
+.PHONY: all deps-all deps-mu deps-ghc $(STAGES) test
