@@ -20,7 +20,7 @@ deps-mu: deps-all
 deps-ghc: deps-all
 	@echo Updating cabal-install
 	@cabal update
-	@cabal install -j cabal-install
+	@[ -d sandbox ] || cabal install cabal-install
 	@echo Initialising cabal sandbox
 	@cabal sandbox init --sandbox=sandbox
 	@cd ghc && cabal sandbox init --sandbox=../sandbox
