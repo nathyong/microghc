@@ -4,8 +4,7 @@ PATH := $(HOME)/.cabal/bin:$(PWD)/sandbox/bin:$(PWD)/bin/sbt/bin:$(PATH)
 UNAME := $(shell uname)
 STAGES = stage-mu stage-ghc
 
-all:
-	false
+all: stage-ghc
 
 deps-all:
 	@echo Updating submodules
